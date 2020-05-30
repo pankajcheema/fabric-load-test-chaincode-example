@@ -33,10 +33,13 @@ import (
 // SimpleChaincode example simple Chaincode implementation
 type Chaincode struct {
 }
-type User struct {
+type Researcher struct {
 	FirstName string `json:"first_name"`
 	LastName  string `json:"last_name"`
-	Roll      int32  `json:"roll"`
+	RegistrationNumber      int32  `json:"registration_number"`
+	Company string `json:"company"`
+	Countary string `json:"country"`
+	CompanyUrl string `json:"company_url"`
 }
 
 func (t *Chaincode) Init(stub shim.ChaincodeStubInterface) pb.Response {
@@ -64,7 +67,7 @@ func addResearcher(stub shim.ChaincodeStubInterface, args []string) pb.Response 
 		return shim.Error("Argument for insert should be equal to 1")
 	}
 
-	user := User{}
+	user := Researcher{}
 	userparseerr := json.Unmarshal([]byte(args[0]), &user)
 	if userparseerr != nil {
 		return shim.Error(userparseerr.Error())
