@@ -31,7 +31,7 @@ import (
 )
 
 // SimpleChaincode example simple Chaincode implementation
-type PankajChaincode struct {
+type Chaincode struct {
 }
 type User struct {
 	FirstName string `json:"first_name"`
@@ -39,29 +39,29 @@ type User struct {
 	Roll      int32  `json:"roll"`
 }
 
-func (t *PankajChaincode) Init(stub shim.ChaincodeStubInterface) pb.Response {
+func (t *Chaincode) Init(stub shim.ChaincodeStubInterface) pb.Response {
 
-	fmt.Println("hello pankaj")
+	fmt.Println("hello test")
 	return shim.Success([]byte("Chaincode initialize successfully"))
 }
 
 // this is the invoke method thid will get execute at the time ogf invocation
 
-func (t *PankajChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
+func (t *Chaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 	function, args := stub.GetFunctionAndParameters()
-	if function == "addUser" {
-		return addUser(stub, args)
-	} else if function == "getUser" {
-		return getUser(stub, args)
+	if function == "addResearcher" {
+		return addResearcher(stub, args)
+	} else if function == "getResearcher" {
+		return getResearcher(stub, args)
 	}
 	fmt.Println("hello invoke")
 	return shim.Error("Pleas eneter a valid function name!!!!!!!!!!!")
 }
 
-func addUser(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+func addResearcher(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 
 	if len(args) != 1 {
-		return shim.Error("Argument for insert should be equal to 2")
+		return shim.Error("Argument for insert should be equal to 1")
 	}
 
 	user := User{}
@@ -86,7 +86,7 @@ func addUser(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 
 }
 
-func getUser(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+func getResearcher(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	if len(args) != 1 {
 		return shim.Error("Please provide single parameter as key !!!!!!!!!!!!1")
 	}
@@ -101,7 +101,7 @@ func getUser(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 // Transaction makes payment of X units from A to B
 
 func main() {
-	err := shim.Start(new(PankajChaincode))
+	err := shim.Start(new(Chaincode))
 	if err != nil {
 		fmt.Printf("Error starting Simple chaincode: %s", err)
 	}
